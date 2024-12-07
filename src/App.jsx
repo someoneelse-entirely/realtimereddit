@@ -51,7 +51,7 @@ function App() {
     useEffect(() => {
         if (posts && posts.data.children.length > prevPosts.length && currentSubreddit === subreddit) {
             const audio = new Audio("newpost.mp3");
-            audio.volume = settings.volume / 100;
+            audio.volume = (settings?.volume || 75) / 100;
             audio.play();
         }
         setPrevPosts(posts ? posts.data.children : []);
