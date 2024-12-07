@@ -26,7 +26,10 @@ function App() {
         );
     }, [posts]);
     const postRefs = useRef([]);
-    const [settings, setSettings] = useLocalStorage("settings", {});
+    const [settings, setSettings] = useLocalStorage("settings", {
+        flair: [],
+        showNSFW: false,
+    });
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const filteredPosts = useMemo(() => {
@@ -34,10 +37,11 @@ function App() {
             .filter((x) => {
                 const hasValidText = x.data.selftext !== "[removed]" && x.data.selftext !== "[deleted]" && x.data.author !== "AutoModerator";
                 const hasSelectedFlair = !settings.flair || settings.flair.length === 0 || settings.flair.includes(x.data.link_flair_text);
-                return hasValidText && hasSelectedFlair;
+                const isNSFWAllowed = settings.showNSFW || !x.data.over_18;
+                return hasValidText && hasSelectedFlair && isNSFWAllowed;
             })
             .slice(0, 8);
-    }, [posts, settings.flair]);
+    }, [posts, settings]);
 
     return (
         <>
