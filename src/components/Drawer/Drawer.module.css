@@ -1,0 +1,47 @@
+.drawer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 50%;
+    height: 100%;
+    background-color: light-dark(rgb(var(--background-light)), rgb(var(--background-dark)));
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: 2.4rem 1.6rem;
+    overflow: hidden auto;
+    border-right: 1px solid light-dark(rgba(var(--text-light), 0.2), rgba(var(--text-dark), 0.2));
+    transform: translateX(-100%);
+    transition: transform 0.35s ease-in-out;
+}
+
+.drawer h3 {
+    margin-top: 1.2rem;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 50;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.closeButton {
+    position: absolute;
+    top: 0.6rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem;
+    color: light-dark(rgba(var(--text-light), 0.55), rgba(var(--text-dark), 0.4));
+}
+
+.closeButton:hover {
+    color: light-dark(rgba(var(--text-light), 0.75), rgba(var(--text-dark), 0.75));
+}

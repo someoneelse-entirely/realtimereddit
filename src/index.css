@@ -1,0 +1,155 @@
+@import "./styles/_base.css";
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 2.4rem 1.6rem;
+    padding-bottom: 0;
+}
+
+.control {
+    display: flex;
+    border: 1px solid light-dark(rgba(var(--text-light), 0.2), rgba(var(--text-dark), 0.2));
+    border-radius: 4px;
+    overflow: hidden;
+    flex: 1;
+    transition: border-color 0.2s;
+}
+
+.control:focus-within {
+    border-color: light-dark(rgba(var(--text-light), 0.4), rgba(var(--text-dark), 0.4));
+}
+
+.control input {
+    flex: 1;
+    padding: 0.75rem;
+    border: none;
+    background: transparent;
+}
+
+.control button {
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.control button:hover {
+    background: light-dark(rgba(var(--text-light), 0.1), rgba(var(--text-dark), 0.1));
+}
+
+.control button svg {
+    vertical-align: middle;
+}
+
+.feed {
+    margin-top: 2rem;
+}
+
+.feed > div {
+    overflow-y: auto;
+}
+
+.post {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border: 1px solid light-dark(rgba(var(--text-light), 0.2), rgba(var(--text-dark), 0.2));
+    border-radius: 4px;
+}
+
+.post.nsfw {
+    border: 1px solid light-dark(rgba(var(--error-light), 0.4), rgba(var(--error-dark), 0.4));
+}
+
+.feed .post .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feed .post .header .flair {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8em;
+    margin-right: 0.5rem;
+}
+
+.feed .post .header .flair.flair-dark {
+    color: rgb(var(--text-light));
+}
+
+.feed .post .header .flair.flair-light {
+    color: rgb(var(--text-dark));
+}
+
+.feed .post h2 {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-height: 1.4;
+}
+
+.feed .post .content {
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.feed .post .content a {
+    color: light-dark(rgb(var(--primary-light)), rgb(var(--primary-dark)));
+}
+
+.feed .post .content a:hover {
+    color: light-dark(rgba(var(--primary-light), 0.6), rgba(var(--primary-dark), 0.6));
+}
+
+.feed .post .content img.thumbnail {
+    max-width: 100%;
+    margin-top: 1rem;
+    border-radius: 4px;
+    max-height: 33.333vh;
+    object-fit: cover;
+}
+
+.feed .post .footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.6rem;
+}
+
+img.emoji {
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: -0.25em;
+}
+
+.post-enter {
+    opacity: 0;
+    transform: translateY(1rem);
+}
+
+.post-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.post-exit {
+    opacity: 1;
+}
+
+.post-exit-active {
+    opacity: 0;
+}
