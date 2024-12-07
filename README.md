@@ -13,7 +13,7 @@ To run the application locally, follow these steps:
 1. Clone the repository:
 
 ```
-git clone https://someoneelse-entirely.github.io/realtimereddit.git
+git clone https://github.com/someoneelse-entirely/realtimereddit.git
 ```
 
 2. Navigate to the project directory:
