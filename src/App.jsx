@@ -40,7 +40,7 @@ function App() {
                 const isNSFWAllowed = settings.showNSFW || !x.data.over_18;
                 return hasValidText && hasSelectedFlair && isNSFWAllowed;
             })
-            .slice(0, 8);
+            .slice(0, 10);
     }, [posts, settings]);
 
     return (
