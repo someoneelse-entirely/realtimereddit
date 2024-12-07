@@ -64,6 +64,7 @@ header {
 
 .post.nsfw {
     border: 1px solid light-dark(rgba(var(--error-light), 0.4), rgba(var(--error-dark), 0.4));
+    background: light-dark(rgba(var(--error-light), 0.1), rgba(var(--error-dark), 0.1));
 }
 
 .feed .post .header {
@@ -127,6 +128,11 @@ header {
     align-items: center;
     gap: 1rem;
     margin-top: 0.6rem;
+}
+
+.feed .post .footer .nsfw {
+    margin-left: auto;
+    color: light-dark(rgb(var(--error-light)), rgb(var(--error-dark)));
 }
 
 img.emoji {

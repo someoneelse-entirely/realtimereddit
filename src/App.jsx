@@ -1,6 +1,6 @@
 import { FaAnglesRight, FaGear, FaCheck, FaSquare } from "react-icons/fa6";
 import ThemeSwitch from "./components/ThemeSwitch/ThemeSwitch";
-import { useRef, useState, createRef, useMemo } from "react";
+import { useRef, useState, createRef, useMemo, useEffect } from "react";
 import useAPI from "./hooks/useAPI";
 import Post from "./components/Post/Post";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -29,8 +29,11 @@ function App() {
     const [settings, setSettings] = useLocalStorage("settings", {
         flair: [],
         showNSFW: false,
+        playSound: true,
     });
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [prevPosts, setPrevPosts] = useState([]);
+    const [currentSubreddit, setCurrentSubreddit] = useState(subreddit);
 
     const filteredPosts = useMemo(() => {
         return posts?.data.children
@@ -40,8 +43,19 @@ function App() {
                 const isNSFWAllowed = settings.showNSFW || !x.data.over_18;
                 return hasValidText && hasSelectedFlair && isNSFWAllowed;
             })
+            .sort((a, b) => b.data.created_utc - a.data.created_utc)
             .slice(0, 10);
     }, [posts, settings]);
+
+    useEffect(() => {
+        if (posts && posts.data.children.length > prevPosts.length && currentSubreddit === subreddit) {
+            const audio = new Audio("/newpost.mp3");
+            audio.volume = settings.volume / 100;
+            audio.play();
+        }
+        setPrevPosts(posts ? posts.data.children : []);
+        setCurrentSubreddit(subreddit);
+    }, [posts, subreddit, currentSubreddit]);
 
     return (
         <>
@@ -103,6 +117,14 @@ function App() {
                 <h3>NSFW Posts</h3>
                 <input type="checkbox" checked={settings.showNSFW} onChange={(e) => setSettings({ ...settings, showNSFW: e.target.checked })} id="showNSFW" />
                 <label htmlFor="showNSFW">Show NSFW posts</label>
+                <h3>Notification Sounds</h3>
+                <input type="checkbox" checked={settings.playSound} onChange={(e) => setSettings({ ...settings, playSound: e.target.checked })} id="playSound" />
+                <label htmlFor="playSound">Play sound when new post is detected</label>
+                <label htmlFor="volume">
+                    <h4>Volume</h4>
+                </label>
+                <input type="range" min="0" max="100" step="1" defaultValue={settings.volume} id="volume" onChange={(e) => setSettings({ ...settings, volume: e.target.value })} />
+                <p style={{ textAlign: "center" }}>{settings.volume}%</p>
             </Drawer>
             <header>
                 <div className="control">

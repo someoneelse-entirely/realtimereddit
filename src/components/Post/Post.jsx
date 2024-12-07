@@ -1,6 +1,5 @@
 import React, { forwardRef, useState, useEffect } from "react";
 import Twemoji from "../Twemoji";
-import { contrastRatio } from "../../utils";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import moment from "moment";
@@ -72,7 +71,7 @@ const Post = forwardRef(({ post }, ref) => {
             <div className="header">
                 <div>
                     {post.link_flair_text && (
-                        <span className={`flair ${contrastRatio(post.link_flair_background_color, "rgb(4, 7, 22)") > 6 ? "flair-dark" : "flair-light"}`} style={{ backgroundColor: post.link_flair_background_color }}>
+                        <span className={`flair ${post.link_flair_text_color === "dark" ? "flair-dark" : "flair-light"}`} style={{ backgroundColor: post.link_flair_background_color }}>
                             {post.link_flair_text}
                         </span>
                     )}
@@ -100,8 +99,9 @@ const Post = forwardRef(({ post }, ref) => {
                     {post.score} points
                 </a>
                 <a href={`https://reddit.com${post.permalink}`} target="_blank" rel="noreferrer">
-                    {post.num_comments} comments
+                    {post.num_comments} comment{post.num_comments !== 1 && "s"}
                 </a>
+                {post.over_18 && <span className="nsfw">NSFW</span>}
             </div>
         </div>
     );
