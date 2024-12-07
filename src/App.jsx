@@ -30,6 +30,7 @@ function App() {
         flair: [],
         showNSFW: false,
         playSound: true,
+        volume: 75,
     });
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [prevPosts, setPrevPosts] = useState([]);
