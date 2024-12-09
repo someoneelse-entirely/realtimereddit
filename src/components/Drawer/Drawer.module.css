@@ -45,3 +45,9 @@
 .closeButton:hover {
     color: light-dark(rgba(var(--text-light), 0.75), rgba(var(--text-dark), 0.75));
 }
+
+@media screen and (max-width: 700px) {
+    .drawer {
+        max-width: 100%;
+    }
+}
