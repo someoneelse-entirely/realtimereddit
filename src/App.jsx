@@ -124,8 +124,8 @@ function App() {
                 <label htmlFor="volume">
                     <h4>Volume</h4>
                 </label>
-                <input type="range" min="0" max="100" step="1" defaultValue={settings.volume} id="volume" onChange={(e) => setSettings({ ...settings, volume: e.target.value })} />
-                <p style={{ textAlign: "center" }}>{settings.volume}%</p>
+                <input type="range" min="0" max="100" step="1" defaultValue={settings?.volume || 75} id="volume" onChange={(e) => setSettings({ ...settings, volume: e.target.value })} />
+                <p style={{ textAlign: "center" }}>{settings?.volume || 75}%</p>
             </Drawer>
             <header>
                 <div className="control">
