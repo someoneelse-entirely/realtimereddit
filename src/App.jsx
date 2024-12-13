@@ -1,4 +1,4 @@
-import { FaAnglesRight, FaGear, FaCheck, FaSquare } from "react-icons/fa6";
+import { FaAnglesRight, FaGear } from "react-icons/fa6";
 import ThemeSwitch from "./components/ThemeSwitch/ThemeSwitch";
 import { useRef, useState, createRef, useMemo, useEffect } from "react";
 import useAPI from "./hooks/useAPI";
@@ -7,6 +7,50 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Drawer from "./components/Drawer/Drawer";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import Select from "react-select";
+
+const selectTheme = (theme) => ({
+    ...theme,
+    colors: {
+        ...theme.colors,
+        primary: "light-dark(rgb(var(--primary-light)), rgb(var(--primary-dark)))",
+        primary25: "light-dark(rgb(var(--primary-light)), rgb(var(--primary-dark)))",
+        primary50: "light-dark(rgb(var(--primary-light)), rgb(var(--primary-dark)))",
+        neutral0: "transparent",
+        neutral5: "transparent",
+        neutral20: "light-dark(rgba(var(--text-light), 0.2), rgba(var(--text-dark), 0.2))",
+        neutral30: "light-dark(rgba(var(--text-light), 0.3), rgba(var(--text-dark), 0.3))",
+        neutral40: "light-dark(rgba(var(--text-light), 0.4), rgba(var(--text-dark), 0.4))",
+        neutral50: "light-dark(rgba(var(--text-light), 0.5), rgba(var(--text-dark), 0.5))",
+        neutral60: "light-dark(rgba(var(--text-light), 0.6), rgba(var(--text-dark), 0.6))",
+        neutral70: "light-dark(rgba(var(--text-light), 0.7), rgba(var(--text-dark), 0.7))",
+        neutral80: "light-dark(rgba(var(--text-light), 0.8), rgba(var(--text-dark), 0.8))",
+        neutral90: "light-dark(rgba(var(--text-light), 0.9), rgba(var(--text-dark), 0.9))",
+    },
+});
+
+const selectStyles = {
+    multiValue: (styles) => {
+        return {
+            ...styles,
+            backgroundColor: "light-dark(rgb(var(--primary-light)), rgb(var(--primary-dark)))",
+            color: "rgb(var(--text-dark))",
+        };
+    },
+    multiValueLabel: (styles) => {
+        return {
+            ...styles,
+            color: "rgb(var(--text-dark))",
+        };
+    },
+    menu: (styles) => {
+        return {
+            ...styles,
+            backgroundColor: "light-dark(rgb(var(--background-light)), rgb(var(--background-dark)))",
+            color: "rgb(var(--text-dark))",
+            border: "1px solid light-dark(rgba(var(--text-light), 0.2), rgba(var(--text-dark), 0.2))",
+        };
+    },
+};
 
 function App() {
     const [subreddit, setSubreddit] = useState("Twitch");
@@ -64,48 +108,8 @@ function App() {
                 <h2>Settings</h2>
                 <h3>Flairs</h3>
                 <Select
-                    theme={(theme) => ({
-                        ...theme,
-                        colors: {
-                            ...theme.colors,
-                            primary: "light-dark(rgb(var(--primary-light)), rgb(var(--primary-dark)))",
-                            primary25: "light-dark(rgb(var(--primary-light)), rgb(var(--primary-dark)))",
-                            primary50: "light-dark(rgb(var(--primary-light)), rgb(var(--primary-dark)))",
-                            neutral0: "transparent",
-                            neutral5: "transparent",
-                            neutral20: "light-dark(rgba(var(--text-light), 0.2), rgba(var(--text-dark), 0.2))",
-                            neutral30: "light-dark(rgba(var(--text-light), 0.3), rgba(var(--text-dark), 0.3))",
-                            neutral40: "light-dark(rgba(var(--text-light), 0.4), rgba(var(--text-dark), 0.4))",
-                            neutral50: "light-dark(rgba(var(--text-light), 0.5), rgba(var(--text-dark), 0.5))",
-                            neutral60: "light-dark(rgba(var(--text-light), 0.6), rgba(var(--text-dark), 0.6))",
-                            neutral70: "light-dark(rgba(var(--text-light), 0.7), rgba(var(--text-dark), 0.7))",
-                            neutral80: "light-dark(rgba(var(--text-light), 0.8), rgba(var(--text-dark), 0.8))",
-                            neutral90: "light-dark(rgba(var(--text-light), 0.9), rgba(var(--text-dark), 0.9))",
-                        },
-                    })}
-                    styles={{
-                        multiValue: (styles) => {
-                            return {
-                                ...styles,
-                                backgroundColor: "light-dark(rgb(var(--primary-light)), rgb(var(--primary-dark)))",
-                                color: "rgb(var(--text-dark))",
-                            };
-                        },
-                        multiValueLabel: (styles) => {
-                            return {
-                                ...styles,
-                                color: "rgb(var(--text-dark))",
-                            };
-                        },
-                        menu: (styles) => {
-                            return {
-                                ...styles,
-                                backgroundColor: "light-dark(rgb(var(--background-light)), rgb(var(--background-dark)))",
-                                color: "rgb(var(--text-dark))",
-                                border: "1px solid light-dark(rgba(var(--text-light), 0.2), rgba(var(--text-dark), 0.2))",
-                            };
-                        },
-                    }}
+                    theme={selectTheme}
+                    styles={selectStyles}
                     options={flairs?.data.choices.map((x) => {
                         return { value: x.text, label: x.text };
                     })}
