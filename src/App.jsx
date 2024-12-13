@@ -55,7 +55,7 @@ const selectStyles = {
 function App() {
     const [subreddit, setSubreddit] = useState("Twitch");
     const subredditRef = useRef(null);
-    const { data: posts, error: postsError } = useAPI(`https://www.reddit.com/r/${subreddit}/new.json?sort=new&raw_json=1`, {
+    const { data: posts, error: postsError } = useAPI(`https://www.reddit.com/r/${subreddit.replaceAll(" ", "+")}/new.json?sort=new&raw_json=1`, {
         refetchInterval: 10000,
     });
     const flairs = useMemo(() => {
@@ -133,7 +133,7 @@ function App() {
             </Drawer>
             <header>
                 <div className="control">
-                    <input type="text" ref={subredditRef} placeholder="Enter subreddit (e.g. Twitch)" defaultValue={subreddit} onKeyUp={(e) => e.key === "Enter" && setSubreddit(subredditRef.current.value)} />
+                    <input type="text" ref={subredditRef} placeholder="Enter subreddit(s) - multiple subreddits separated by space" defaultValue={subreddit} onKeyUp={(e) => e.key === "Enter" && setSubreddit(subredditRef.current.value)} />
                     <button onClick={() => setSubreddit(subredditRef.current.value)}>
                         <FaAnglesRight />
                     </button>
