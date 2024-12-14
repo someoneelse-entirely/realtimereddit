@@ -236,6 +236,21 @@ select:focus {
     border-color: light-dark(rgb(var(--primary-light)), rgb(var(--primary-dark)));
 }
 
+button {
+    background: none;
+    border: 1px solid light-dark(rgba(var(--text-light), 0.2), rgba(var(--text-dark), 0.2));
+    cursor: pointer;
+    line-height: 1;
+    color: light-dark(rgb(var(--text-light)), rgb(var(--text-dark)));
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+button:hover {
+    background: light-dark(rgba(var(--text-light), 0.1), rgba(var(--text-dark), 0.1));
+}
+
 footer {
     text-align: center;
     padding: 2rem 0;
