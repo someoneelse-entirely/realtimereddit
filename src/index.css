@@ -48,7 +48,10 @@ header {
 }
 
 .feed {
-    margin-top: 2rem;
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 2.4rem 1.6rem;
+    width: 100%;
 }
 
 .feed > div {
@@ -115,10 +118,8 @@ header {
     color: light-dark(rgba(var(--primary-light), 0.6), rgba(var(--primary-dark), 0.6));
 }
 
-.feed .post .content img.thumbnail {
+.feed .post .content .thumbnail {
     max-width: 100%;
-    margin-top: 1rem;
-    border-radius: 4px;
     max-height: 33.333vh;
     object-fit: cover;
 }

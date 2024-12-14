@@ -1,6 +1,12 @@
 # Realtime Subreddit Feed
 
-This project is a simple web application that displays a real-time feed of the top 10 posts from a subreddit of your choice. The feed updates every 10 seconds to display the latest posts. The application is built using React and the Reddit API.
+This project is designed to provide a real-time feed of posts from a specified subreddit. It uses the Reddit API to fetch new posts and updates the feed dynamically as new content is posted.
+
+## Key Features
+
+-   **Real-time Updates**: Automatically fetches and displays new posts as they are published.
+-   **Customizable Subreddit**: Allows users to specify which subreddit they want to follow.
+-   **User-friendly Interface**: Provides a clean and intuitive interface for viewing the feed.
 
 ## Hosted Application
 

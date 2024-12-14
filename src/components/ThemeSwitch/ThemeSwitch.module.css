@@ -4,7 +4,7 @@
     cursor: pointer;
     line-height: 1;
     color: light-dark(rgb(var(--text-light)), rgb(var(--text-dark)));
-    padding: 0.71rem;
+    padding: 0.7rem;
     border-radius: 0.4rem;
     transition: border-color 0.2s, background 0.2s;
 }

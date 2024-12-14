@@ -1,8 +1,12 @@
-import React, { forwardRef, useState, useEffect } from "react";
+import React, { forwardRef, useState, Suspense, lazy } from "react";
 import Twemoji from "../Twemoji";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import moment from "moment";
+import { useLocalStorage } from "@uidotdev/usehooks";
+// import Skeleton from "../Skeleton/Skeleton";
+
+const LazyImage = lazy(() => import("../LazyImage"));
 
 function replaceEmojisWithComponents(text) {
     const emojiRegex = /(?:[\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDE4F]|\uD83D[\uDE80-\uDEFF]|\uD83E[\uDD00-\uDDFF]|[\u2600-\u26FF]\uFE0F?|\uD83C[\uDFF0-\uDFFF])/g;
@@ -65,9 +69,20 @@ function parsePostContent(text) {
 
 const Post = forwardRef(({ post }, ref) => {
     const [timeFormat, setTimeFormat] = useState("relative");
+    const [showImage, setShowImage] = useState(!post.over_18);
+    const [{ showImages }] = useLocalStorage("settings", {
+        flair: [],
+        showNSFW: false,
+        playSound: true,
+        volume: 75,
+        posts: 10,
+        showImages: true,
+    });
+
+    const isNSFW = post.over_18;
 
     return (
-        <div className={`post ${post.over_18 ? "nsfw" : ""}`.trim()} ref={ref}>
+        <div className={`post ${isNSFW ? "nsfw" : ""}`.trim()} ref={ref}>
             <div className="header">
                 <div>
                     {post.link_flair_text && (
@@ -88,20 +103,49 @@ const Post = forwardRef(({ post }, ref) => {
             </a>
             <div className="content">
                 {parsePostContent(post.selftext)}
-                {post.preview && post.preview.images && post.preview.images[0] && post.preview.images[0].source && (
+                {showImages && post.preview && post.preview.images && post.preview.images[0] && post.preview.images[0].source && (
                     <a href={post.preview.images[0].source.url} target="_blank" rel="noreferrer">
-                        <img src={post.preview.images[0].source.url} className="thumbnail" alt={post.title} />
+                        <div style={{ position: "relative", display: "inline-block", borderRadius: "4px", overflow: "hidden", maxWidth: "100%", maxHeight: "33.333vh", objectFit: "cover" }}>
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <LazyImage src={post.preview.images[0].source.url} alt={post.title} className="thumbnail" />
+                                {isNSFW && !showImage && (
+                                    <div
+                                        className="nsfw-overlay"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setShowImage(true);
+                                        }}
+                                        style={{
+                                            position: "absolute",
+                                            top: 0,
+                                            left: 0,
+                                            width: "100%",
+                                            height: "100%",
+                                            backgroundColor: "rgba(0, 0, 0,0.9)",
+                                            color: "#fff",
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            cursor: "pointer",
+                                            backdropFilter: "blur(50px)",
+                                            zIndex: 2,
+                                        }}>
+                                        <span>Click to show image</span>
+                                    </div>
+                                )}
+                            </Suspense>
+                        </div>
                     </a>
                 )}
             </div>
             <div className="footer">
                 <a href={`https://reddit.com${post.permalink}`} target="_blank" rel="noreferrer">
-                    {post.score} points
+                    {post.score} point{post.score !== 1 && "s"}
                 </a>
                 <a href={`https://reddit.com${post.permalink}`} target="_blank" rel="noreferrer">
                     {post.num_comments} comment{post.num_comments !== 1 && "s"}
                 </a>
-                {post.over_18 && <span className="nsfw">NSFW</span>}
+                {isNSFW && <span className="nsfw">NSFW</span>}
             </div>
         </div>
     );

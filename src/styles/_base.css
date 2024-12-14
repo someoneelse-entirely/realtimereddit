@@ -129,10 +129,6 @@ h6 {
 main {
     width: 100%;
     flex: 1;
-    max-width: 120rem;
-    margin: 0 auto;
-    padding: 2.4rem 1.6rem;
-    padding-top: 0;
     overflow-y: auto;
 }
 
@@ -142,7 +138,7 @@ main {
     cursor: pointer;
     line-height: 1;
     color: light-dark(rgb(var(--text-light)), rgb(var(--text-dark)));
-    padding: 0.71rem;
+    padding: 0.7rem;
     border-radius: 0.4rem;
     transition: border-color 0.2s, background 0.2s;
 }
@@ -202,6 +198,27 @@ input[type="checkbox"]:checked + label:after {
 
 input[type="checkbox"] + label span {
     vertical-align: middle;
+}
+
+input[type="number"] {
+    appearance: none;
+    border: 1px solid light-dark(rgba(var(--text-light), 0.2), rgba(var(--text-dark), 0.2));
+    border-radius: 0.3rem;
+    padding: 0.6rem 1rem;
+    font-size: 1.6rem;
+    color: light-dark(rgb(var(--text-light)), rgb(var(--text-dark)));
+    background-color: light-dark(rgb(var(--background-light)), rgb(var(--background-dark)));
+    transition: border-color 0.2s;
+}
+
+input[type="number"]:focus {
+    border-color: light-dark(rgb(var(--primary-light)), rgb(var(--primary-dark)));
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 footer {

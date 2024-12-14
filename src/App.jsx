@@ -52,10 +52,12 @@ const selectStyles = {
     },
 };
 
+const audio = new Audio("newpost.mp3");
+
 function App() {
     const [subreddit, setSubreddit] = useState("Twitch");
     const subredditRef = useRef(null);
-    const { data: posts, error: postsError } = useAPI(`https://www.reddit.com/r/${subreddit.replaceAll(" ", "+")}/new.json?sort=new&raw_json=1`, {
+    const { data: posts, error: postsError } = useAPI(`https://www.reddit.com/r/${subreddit.replaceAll(" ", "+")}/new.json?sort=new&raw_json=1&limit=100`, {
         refetchInterval: 10000,
     });
     const flairs = useMemo(() => {
@@ -75,10 +77,12 @@ function App() {
         showNSFW: false,
         playSound: true,
         volume: 75,
+        posts: 10,
+        showImages: true,
     });
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [prevPosts, setPrevPosts] = useState([]);
-    const [currentSubreddit, setCurrentSubreddit] = useState(subreddit);
+    const [currentSubreddit, setCurrentSubreddit] = useState("");
 
     const filteredPosts = useMemo(() => {
         return posts?.data.children
@@ -89,12 +93,11 @@ function App() {
                 return hasValidText && hasSelectedFlair && isNSFWAllowed;
             })
             .sort((a, b) => b.data.created_utc - a.data.created_utc)
-            .slice(0, 10);
+            .slice(0, settings.posts);
     }, [posts, settings]);
 
     useEffect(() => {
         if (posts && posts.data.children.length > prevPosts.length && currentSubreddit === subreddit) {
-            const audio = new Audio("newpost.mp3");
             audio.volume = (settings?.volume || 75) / 100;
             audio.play();
         }
@@ -122,7 +125,8 @@ function App() {
                 <h3>NSFW Posts</h3>
                 <input type="checkbox" checked={settings.showNSFW} onChange={(e) => setSettings({ ...settings, showNSFW: e.target.checked })} id="showNSFW" />
                 <label htmlFor="showNSFW">Show NSFW posts</label>
-                <h3>Notification Sounds</h3>
+                <h3>Notifications</h3>
+                <h4>Sound</h4>
                 <input type="checkbox" checked={settings.playSound} onChange={(e) => setSettings({ ...settings, playSound: e.target.checked })} id="playSound" />
                 <label htmlFor="playSound">Play sound when new post is detected</label>
                 <label htmlFor="volume">
@@ -130,10 +134,27 @@ function App() {
                 </label>
                 <input type="range" min="0" max="100" step="1" defaultValue={settings?.volume || 75} id="volume" onChange={(e) => setSettings({ ...settings, volume: e.target.value })} />
                 <p style={{ textAlign: "center" }}>{settings?.volume || 75}%</p>
+                <h3>Posts</h3>
+                <label htmlFor="posts">Visible posts</label>
+                <input type="number" min="1" max="100" step="1" defaultValue={settings?.posts || 10} id="posts" onChange={(e) => setSettings({ ...settings, posts: e.target.value })} />
+                <input type="checkbox" checked={settings.showImages} onChange={(e) => setSettings({ ...settings, showImages: e.target.checked })} id="showImages" />
+                <label htmlFor="showImages" style={{ marginTop: "1rem" }}>
+                    Show images
+                </label>
             </Drawer>
             <header>
                 <div className="control">
-                    <input type="text" ref={subredditRef} placeholder="Enter subreddit(s) - multiple subreddits separated by space" defaultValue={subreddit} onKeyUp={(e) => e.key === "Enter" && setSubreddit(subredditRef.current.value)} />
+                    <input
+                        type="text"
+                        ref={subredditRef}
+                        placeholder="Enter subreddit(s) - multiple subreddits separated by space"
+                        defaultValue={subreddit}
+                        onKeyUp={(e) => {
+                            if (e.key === "Enter" && subredditRef.current.value && subredditRef.current.value.trim() !== "") {
+                                setSubreddit(subredditRef.current.value);
+                            }
+                        }}
+                    />
                     <button onClick={() => setSubreddit(subredditRef.current.value)}>
                         <FaAnglesRight />
                     </button>
