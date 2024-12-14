@@ -93,7 +93,7 @@ function App() {
                 return hasValidText && hasSelectedFlair && isNSFWAllowed;
             })
             .sort((a, b) => b.data.created_utc - a.data.created_utc)
-            .slice(0, settings.posts);
+            .slice(0, settings?.posts || 10);
     }, [posts, settings]);
 
     useEffect(() => {
@@ -123,11 +123,11 @@ function App() {
                     defaultValue={settings.flair ? settings.flair.map((x) => ({ value: x, label: x })) : []}
                 />
                 <h3>NSFW Posts</h3>
-                <input type="checkbox" checked={settings.showNSFW} onChange={(e) => setSettings({ ...settings, showNSFW: e.target.checked })} id="showNSFW" />
+                <input type="checkbox" checked={settings?.showNSFW || false} onChange={(e) => setSettings({ ...settings, showNSFW: e.target.checked })} id="showNSFW" />
                 <label htmlFor="showNSFW">Show NSFW posts</label>
                 <h3>Notifications</h3>
                 <h4>Sound</h4>
-                <input type="checkbox" checked={settings.playSound} onChange={(e) => setSettings({ ...settings, playSound: e.target.checked })} id="playSound" />
+                <input type="checkbox" checked={settings?.playSound || true} onChange={(e) => setSettings({ ...settings, playSound: e.target.checked })} id="playSound" />
                 <label htmlFor="playSound">Play sound when new post is detected</label>
                 <label htmlFor="volume">
                     <h4>Volume</h4>
@@ -137,7 +137,7 @@ function App() {
                 <h3>Posts</h3>
                 <label htmlFor="posts">Visible posts</label>
                 <input type="number" min="1" max="100" step="1" defaultValue={settings?.posts || 10} id="posts" onChange={(e) => setSettings({ ...settings, posts: e.target.value })} />
-                <input type="checkbox" checked={settings.showImages} onChange={(e) => setSettings({ ...settings, showImages: e.target.checked })} id="showImages" />
+                <input type="checkbox" checked={settings?.showImages || true} onChange={(e) => setSettings({ ...settings, showImages: e.target.checked })} id="showImages" />
                 <label htmlFor="showImages" style={{ marginTop: "1rem" }}>
                     Show images
                 </label>

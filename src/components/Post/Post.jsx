@@ -70,7 +70,7 @@ function parsePostContent(text) {
 const Post = forwardRef(({ post }, ref) => {
     const [timeFormat, setTimeFormat] = useState("relative");
     const [showImage, setShowImage] = useState(!post.over_18);
-    const [{ showImages }] = useLocalStorage("settings", {
+    const [{ showImages = true }] = useLocalStorage("settings", {
         flair: [],
         showNSFW: false,
         playSound: true,
