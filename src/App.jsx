@@ -7,6 +7,8 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Drawer from "./components/Drawer/Drawer";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import Select from "react-select";
+import Modal from "./components/Modal/Modal";
+import Changelog from "./components/Changelog";
 
 const selectTheme = (theme) => ({
     ...theme,
@@ -79,8 +81,13 @@ function App() {
         volume: 75,
         posts: 10,
         showImages: true,
+        timestampFormat: {
+            value: "relative",
+            label: "Relative",
+        },
     });
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [changeLogOpen, setChangeLogOpen] = useState(false);
     const [prevPosts, setPrevPosts] = useState([]);
     const [currentSubreddit, setCurrentSubreddit] = useState("");
 
@@ -141,7 +148,15 @@ function App() {
                 <label htmlFor="showImages" style={{ marginTop: "1rem" }}>
                     Show images
                 </label>
+                <h4>Timestamps</h4>
+                <select defaultValue={settings?.timestampFormat?.value || "relative"} onChange={(e) => setSettings({ ...settings, timestampFormat: { value: e.target.value, label: e.target.selectedOptions[0].label } })}>
+                    <option value="relative">Relative</option>
+                    <option value="absolute">Absolute</option>
+                </select>
             </Drawer>
+            <Modal isOpen={changeLogOpen} onClose={() => setChangeLogOpen(false)} style={{ overflow: "hidden" }}>
+                <Changelog />
+            </Modal>
             <header>
                 <div className="control">
                     <input
@@ -198,6 +213,9 @@ function App() {
                 <p>
                     Made with <img className="emoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/svg/2764.svg" width="16" height="16" alt="❤" loading="lazy" draggable="false" /> by <a href="https://reddit.com/user/someoneelseentirely-">someoneelseentirely-</a>
                 </p>
+                <a style={{ cursor: "pointer" }} onClick={() => setChangeLogOpen(true)}>
+                    Changelog
+                </a>
             </footer>
         </>
     );

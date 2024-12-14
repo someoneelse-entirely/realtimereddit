@@ -221,6 +221,21 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
+select {
+    appearance: none;
+    border: 1px solid light-dark(rgba(var(--text-light), 0.2), rgba(var(--text-dark), 0.2));
+    border-radius: 0.3rem;
+    padding: 0.6rem 1rem;
+    font-size: 1.6rem;
+    color: light-dark(rgb(var(--text-light)), rgb(var(--text-dark)));
+    background-color: light-dark(rgb(var(--background-light)), rgb(var(--background-dark)));
+    transition: border-color 0.2s;
+}
+
+select:focus {
+    border-color: light-dark(rgb(var(--primary-light)), rgb(var(--primary-dark)));
+}
+
 footer {
     text-align: center;
     padding: 2rem 0;

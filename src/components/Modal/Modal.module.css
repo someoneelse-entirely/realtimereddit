@@ -1,0 +1,57 @@
+.modal {
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 50%;
+    height: 50%;
+    max-height: 50%;
+    background-color: light-dark(rgb(var(--background-light)), rgb(var(--background-dark)));
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    padding: 2.4rem 1.6rem;
+    border-radius: 0.5rem;
+    overflow: hidden auto;
+    border: 1px solid light-dark(rgba(var(--text-light), 0.2), rgba(var(--text-dark), 0.2));
+    box-shadow: 0 0 1rem light-dark(rgba(var(--text-light), 0.2), rgba(var(--text-dark), 0.1));
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal h3 {
+    margin-top: 1.2rem;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 50;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.closeButton {
+    position: absolute;
+    top: 0.6rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem;
+    color: light-dark(rgba(var(--text-light), 0.55), rgba(var(--text-dark), 0.4));
+}
+
+.closeButton:hover {
+    color: light-dark(rgba(var(--text-light), 0.75), rgba(var(--text-dark), 0.75));
+}
+
+@media screen and (max-width: 800px) {
+    .modal {
+        max-width: 95%;
+    }
+}

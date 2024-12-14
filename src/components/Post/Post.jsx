@@ -68,15 +68,18 @@ function parsePostContent(text) {
 }
 
 const Post = forwardRef(({ post }, ref) => {
-    const [timeFormat, setTimeFormat] = useState("relative");
     const [showImage, setShowImage] = useState(!post.over_18);
-    const [{ showImages = true }] = useLocalStorage("settings", {
+    const [{ showImages = true, timestampFormat = { value: "relative", label: "Relative" } }] = useLocalStorage("settings", {
         flair: [],
         showNSFW: false,
         playSound: true,
         volume: 75,
         posts: 10,
         showImages: true,
+        timestampFormat: {
+            value: "relative",
+            label: "Relative",
+        },
     });
 
     const isNSFW = post.over_18;
@@ -94,9 +97,7 @@ const Post = forwardRef(({ post }, ref) => {
                         u/{post.author}
                     </a>
                 </div>
-                <span style={{ cursor: "pointer" }} onClick={() => setTimeFormat(timeFormat === "relative" ? "absolute" : "relative")}>
-                    {timeFormat === "relative" ? moment.unix(post.created_utc).fromNow() : moment.unix(post.created_utc).format("h:mm A")}
-                </span>
+                <span>{!timestampFormat?.value || timestampFormat?.value === "relative" ? moment.unix(post.created_utc).fromNow() : moment.unix(post.created_utc).format("h:mm A")}</span>
             </div>
             <a href={`https://reddit.com${post.permalink}`} target="_blank" rel="noreferrer" title={post.title}>
                 <h2>{parsePostContent(post.title)}</h2>

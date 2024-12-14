@@ -4,13 +4,13 @@ export default function useAPI(url, opts = {}) {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const { refetchInterval } = opts;
+    const { refetchInterval, headers } = opts;
 
     useEffect(() => {
         async function fetchData() {
             setLoading(true);
             try {
-                const response = await fetch(url);
+                const response = await fetch(url, { headers });
                 const json = await response.json();
                 setData(json);
                 setError(null);
