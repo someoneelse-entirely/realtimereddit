@@ -141,8 +141,7 @@ function App() {
                 <label htmlFor="volume">
                     <h4>Volume</h4>
                 </label>
-                <input type="range" min="0" max="100" step="1" defaultValue={settings?.volume || 75} id="volume" onChange={(e) => setSettings({ ...settings, volume: e.target.value })} />
-                <p style={{ textAlign: "center" }}>{settings?.volume || 75}%</p>
+                <input type="number" min="0" max="100" step="1" defaultValue={settings?.volume || 75} id="volume" onChange={(e) => setSettings({ ...settings, volume: e.target.value })} />
                 <h3>Posts</h3>
                 <label htmlFor="posts">Visible posts</label>
                 <input type="number" min="1" max="100" step="1" defaultValue={settings?.posts || 10} id="posts" onChange={(e) => setSettings({ ...settings, posts: e.target.value })} />
