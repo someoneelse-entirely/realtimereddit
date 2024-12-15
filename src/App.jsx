@@ -59,7 +59,7 @@ const audio = new Audio("newpost.mp3");
 function App() {
     const [subreddit, setSubreddit] = useState("Twitch");
     const subredditRef = useRef(null);
-    const { data: posts, error: postsError } = useAPI(`https://www.reddit.com/r/${subreddit}/new.json?sort=new&raw_json=1&limit=100`, {
+    const { data: posts, error: postsError } = useAPI(`https://www.reddit.com/r/${subreddit}/new.json?sort=new&raw_json=1&limit=50`, {
         refetchInterval: 10000,
     });
     const flairs = useMemo(() => {
@@ -146,7 +146,7 @@ function App() {
                 <input type="number" min="0" max="100" step="1" defaultValue={settings?.volume || 75} id="volume" onChange={(e) => setSettings({ ...settings, volume: e.target.value })} />
                 <h3>Posts</h3>
                 <label htmlFor="posts">Visible posts</label>
-                <input type="number" min="1" max="100" step="1" defaultValue={settings?.posts || 10} id="posts" onChange={(e) => setSettings({ ...settings, posts: e.target.value })} />
+                <input type="number" min="1" max="50" step="1" defaultValue={settings?.posts || 10} id="posts" onChange={(e) => setSettings({ ...settings, posts: e.target.value })} />
                 <input type="checkbox" checked={settings?.showImages == undefined ? true : settings?.showImages} onChange={(e) => setSettings({ ...settings, showImages: e.target.checked })} id="showImages" />
                 <label htmlFor="showImages" style={{ marginTop: "1rem" }}>
                     Show images
