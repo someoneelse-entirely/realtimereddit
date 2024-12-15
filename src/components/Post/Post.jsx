@@ -88,6 +88,9 @@ const Post = forwardRef(({ post }, ref) => {
         <div className={`post ${isNSFW ? "nsfw" : ""}`.trim()} ref={ref}>
             <div className="header">
                 <div>
+                    <a href={`https://reddit.com/r/${post.subreddit}`} target="_blank" rel="noreferrer">
+                        r/{post.subreddit}
+                    </a>
                     {post.link_flair_text && (
                         <span className={`flair ${post.link_flair_text_color === "dark" ? "flair-dark" : "flair-light"}`} style={{ backgroundColor: post.link_flair_background_color }}>
                             {post.link_flair_text}

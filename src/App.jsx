@@ -59,7 +59,7 @@ const audio = new Audio("newpost.mp3");
 function App() {
     const [subreddit, setSubreddit] = useState("Twitch");
     const subredditRef = useRef(null);
-    const { data: posts, error: postsError } = useAPI(`https://www.reddit.com/r/${subreddit.replaceAll(" ", "+")}/new.json?sort=new&raw_json=1&limit=100`, {
+    const { data: posts, error: postsError } = useAPI(`https://www.reddit.com/r/${subreddit}/new.json?sort=new&raw_json=1&limit=100`, {
         refetchInterval: 10000,
     });
     const flairs = useMemo(() => {
