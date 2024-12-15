@@ -66,7 +66,7 @@ function App() {
         return posts?.data?.children.reduce(
             (acc, post) => {
                 if (post.data.link_flair_text && !acc.data.choices.find((x) => x.text === post.data.link_flair_text)) {
-                    acc.data.choices.push({ text: post.data.link_flair_text, id: post.data.link_flair_css_class });
+                    acc.data.choices.push({ text: post.data.link_flair_text, id: post.data.link_flair_css_class, subreddit: post.data.subreddit });
                 }
                 return acc;
             },
@@ -122,9 +122,11 @@ function App() {
                 <Select
                     theme={selectTheme}
                     styles={selectStyles}
-                    options={flairs?.data.choices.map((x) => {
-                        return { value: x.text, label: x.text };
-                    })}
+                    options={flairs?.data.choices
+                        .map((x) => {
+                            return { value: x.text, label: subreddit.includes("+") ? `r/${x.subreddit} - ${x.text}` : x.text };
+                        })
+                        .sort((a, b) => a.label.localeCompare(b.label))}
                     isMulti={true}
                     onChange={(selected) => {
                         setSettings({ ...settings, flair: selected.map((x) => x.value) });
