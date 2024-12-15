@@ -5,7 +5,7 @@ import useAPI from "./hooks/useAPI";
 import Post from "./components/Post/Post";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Drawer from "./components/Drawer/Drawer";
-import { useLocalStorage } from "@uidotdev/usehooks";
+import { useLocalStorage, useDebounce } from "@uidotdev/usehooks";
 import Select from "react-select";
 import Modal from "./components/Modal/Modal";
 import Changelog from "./components/Changelog";
@@ -91,6 +91,8 @@ function App() {
     const [prevPosts, setPrevPosts] = useState([]);
     const [currentSubreddit, setCurrentSubreddit] = useState("");
 
+    const debouncedPosts = useDebounce(settings.posts, 500);
+
     const filteredPosts = useMemo(() => {
         return posts?.data.children
             .filter((x) => {
@@ -100,8 +102,8 @@ function App() {
                 return hasValidText && hasSelectedFlair && isNSFWAllowed;
             })
             .sort((a, b) => b.data.created_utc - a.data.created_utc)
-            .slice(0, settings?.posts || 10);
-    }, [posts, settings]);
+            .slice(0, debouncedPosts || 10);
+    }, [posts, settings, debouncedPosts]);
 
     useEffect(() => {
         if (posts && posts.data.children.length > prevPosts.length && currentSubreddit === subreddit) {
