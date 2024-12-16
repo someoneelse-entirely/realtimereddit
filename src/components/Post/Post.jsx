@@ -67,7 +67,7 @@ function parsePostContent(text) {
     );
 }
 
-const Post = forwardRef(({ post }, ref) => {
+const Post = forwardRef(({ post }, ref, isMultisub) => {
     const [showImage, setShowImage] = useState(!post.over_18);
     const [{ showImages = true, timestampFormat = { value: "relative", label: "Relative" } }] = useLocalStorage("settings", {
         flair: [],
@@ -88,9 +88,11 @@ const Post = forwardRef(({ post }, ref) => {
         <div className={`post ${isNSFW ? "nsfw" : ""}`.trim()} ref={ref}>
             <div className="header">
                 <div>
-                    <a href={`https://reddit.com/r/${post.subreddit}`} target="_blank" rel="noreferrer" style={{ marginRight: "0.5rem" }}>
-                        r/{post.subreddit}
-                    </a>
+                    {isMultisub && (
+                        <a href={`https://reddit.com/r/${post.subreddit}`} target="_blank" rel="noreferrer" style={{ marginRight: "0.5rem" }}>
+                            r/{post.subreddit}
+                        </a>
+                    )}
                     {post.link_flair_text && (
                         <span className={`flair ${post.link_flair_text_color === "dark" ? "flair-dark" : "flair-light"}`} style={{ backgroundColor: post.link_flair_background_color }}>
                             {post.link_flair_text}

@@ -216,7 +216,7 @@ function App() {
                                         classNames="post"
                                         in={true}
                                         nodeRef={postRefs.current[index]}>
-                                        <Post post={post.data} ref={postRefs.current[index]} />
+                                        <Post post={post.data} isMultisub={subreddit.includes("+")} ref={postRefs.current[index]} />
                                     </CSSTransition>
                                 );
                             })}
