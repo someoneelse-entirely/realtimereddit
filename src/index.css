@@ -76,6 +76,11 @@ header {
     align-items: center;
 }
 
+.feed .post .header > div {
+    display: flex;
+    align-items: center;
+}
+
 .feed .post .header .flair {
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
