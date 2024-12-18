@@ -81,6 +81,16 @@ header {
     align-items: center;
 }
 
+.feed .post .header a,
+.feed .post .header span {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
 .feed .post .header .flair {
     padding: 0.15rem 0.5rem;
     border-radius: 4px;
